@@ -5,6 +5,7 @@
 #include <ios>
 #include <iostream>
 #include <string>
+#include "player.h"
 
 void CollisionWithScreenBorder
 (
@@ -16,6 +17,7 @@ void CollisionWithScreenBorder
   bool * jumping,
   bool * jumpingEnabled
 );
+
 const char * ToString(bool val) {
   return val ? "true" : "false";
 } 
@@ -27,6 +29,7 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
 
+    Player player;
     Vector2 position = { (float)screenWidth/2, (float)screenHeight/2 };
     Vector2 size = { (float)50, (float)50 };
     Vector2 velocity = { (float)0, (float)0 };
@@ -86,7 +89,7 @@ int main(void)
       std::string countString = std::to_string(xPressedCount);
       std::string jString = (std::string)"jumping : " + ToString(*jumping);
 
-      CollisionWithScreenBorder(&position, &velocity, screenWidth, 
+      player.CollisionWithScreenBorder(&position, &velocity, screenWidth, 
                                 screenHeight, size, jumping, jumpingEnabled);
       DrawText(jString.c_str(), 10, 10, 16, WHITE);
       DrawText(countString.c_str(), 10, 70, 16, WHITE);
