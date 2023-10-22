@@ -49,7 +49,7 @@ int main(void)
 
 		std::vector<Tile> * collisionsPtr = &collisions;
     
-  
+		std::cout << "Test" << std::endl; 
     Player player;
     player.position.x = screenWidth/2.0f;
     player.position.y = screenHeight/2.0f;
