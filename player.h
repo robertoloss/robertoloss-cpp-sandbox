@@ -1,11 +1,28 @@
 #pragma once
 #include "raylib.h"
-  
+#include <vector>
+#include <string>
+
+struct Tile {
+  Vector2 size;
+  Vector2 position;
+};
+
+enum direction {top, bottom, left, right};
+
+struct CollisionTile {
+	bool didCollisionHappen;
+	Tile tile;
+	direction collisionSide;	
+};
+
 class Player  {
 public:
   void CollisionWithScreenBorder (int screenWidth, int screenHeight);
   void Move(); 
   void EventListeners();
+	CollisionTile CheckCollisionWithTiles(std::vector<Tile>* collisions);
+	void CollisionManager(CollisionTile);
     
   Vector2 position; 
   Vector2 size = { (float)50, (float)50 };
