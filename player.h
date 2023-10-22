@@ -16,6 +16,8 @@ struct CollisionTile {
 	direction collisionSide;	
 };
 
+enum MovementAxis {xAxis, yAxis};
+
 class Player  {
 public:
   void CollisionWithScreenBorder (int screenWidth, int screenHeight);
@@ -25,9 +27,11 @@ public:
 	void CollisionManager(CollisionTile);
     
   Vector2 position; 
+	Vector2 oldPosition;
   Vector2 size = { (float)50, (float)50 };
   Vector2 velocity = { (float)0, (float)0 };
   Vector2 maxVelocity = {(float)7, (float)20}; 
+	MovementAxis axis;
   bool jumpingTmp = false;
   bool jumpingEnabledTmp = true;
   bool * jumping = &jumpingTmp;

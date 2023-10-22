@@ -57,13 +57,16 @@ void Player::EventListeners() {
 
 
 void Player::Move() {
-  position.x += velocity.x;
-  position.y += velocity.y;
- 
-  if (velocity.x > 0) velocity.x -= 0.5f;
-  if (velocity.x < 0) velocity.x += 0.5f;
- 
-  if (velocity.y < maxVelocity.y) velocity.y++;
+	oldPosition.x = position.x;
+	oldPosition.y = position.y;
+
+	position.x += velocity.x;
+	position.y += velocity.y;
+
+	if (velocity.x > 0) velocity.x -= 0.5f;
+	if (velocity.x < 0) velocity.x += 0.5f;
+
+	if (velocity.y < maxVelocity.y) velocity.y++;
 }
 
 void Player::Show() {
@@ -95,33 +98,13 @@ CollisionTile Player::CheckCollisionWithTiles(std::vector<Tile>* collisions) {
 			(position.y + size.y) > tile.position.y &&
 			(position.y + size.y) < tile.position.y + size.y;
  
-		if (leftOverlap && (topOverlap || bottomOverlap)) {
+		if ((rightOverlap || leftOverlap) && (topOverlap || bottomOverlap)) {
 			result.didCollisionHappen = true;
 			result.tile = tile;
-			result.collisionSide = left;
-			printf("\nLeft");
-		//	break;
-		}
-		if (rightOverlap && (topOverlap || bottomOverlap)) {			
-			result.didCollisionHappen = true;
-			result.tile = tile;
-			result.collisionSide = right;
-			printf("\nRight");
-		//	break;
-		}
-		if (topOverlap && (leftOverlap || rightOverlap)) {			
-			result.didCollisionHappen = true;
-			result.tile = tile;
-			result.collisionSide = top;
-			printf("\nTop");
-		//	break;
-		}
-		if (bottomOverlap && (leftOverlap || rightOverlap)) {			
-			result.didCollisionHappen = true;
-			result.tile = tile;
-			result.collisionSide = bottom;
-			printf("\nBottom");
-		//	break;
+			if (oldPosition.y > position.y) result.collisionSide = top;
+			if (oldPosition.y < position.y) result.collisionSide = bottom;
+			if (oldPosition.x > position.x) result.collisionSide = left;
+			if (oldPosition.x < position.x) result.collisionSide = right;
 		}
 	};
 	return result;
