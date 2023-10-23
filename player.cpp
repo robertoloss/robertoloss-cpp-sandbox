@@ -114,18 +114,22 @@ void Player::CollisionManager(CollisionTile collision) {
 	if (collision.didCollisionHappen == 1) {
 		switch(collision.collisionSide) {
 			case top:
+				std::cout << "top" << std::endl;
 				velocity.y = 0;
 				position.y = collision.tile.position.y + collision.tile.size.y;
 				break;
 			case bottom:
+				std::cout << "bottom" << std::endl;
 				velocity.y = 0;
 				position.y = collision.tile.position.y - size.y;
 				break;
 			case left:
+				std::cout << "left" << std::endl;
 				velocity.x = 0;
 				position.x = collision.tile.position.x + collision.tile.size.x;
 				break;
 			case right:
+				std::cout << "right" << std::endl;
 				velocity.x = 0;
 				position.x = collision.tile.position.x - size.x;
 				break;
