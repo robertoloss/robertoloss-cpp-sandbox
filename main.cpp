@@ -53,13 +53,16 @@ int main(void)
     player.position.x = screenWidth/2.0f;
     player.position.y = screenHeight/2.0f;
     
-    while (!WindowShouldClose())   
-    {
+    while (!WindowShouldClose()) {
       player.EventListeners();
       player.Move(); 
       player.CollisionWithScreenBorder(screenWidth, screenHeight);
-			player.CollisionManager(player.CheckCollisionWithTiles(collisionsPtr));
-   
+			
+		  for (auto tile: collisions) {
+				Tile* tilePtr =  &tile;
+				player.CollisionManager(player.CheckCollisionWithTiles(&tile),tilePtr);
+			};
+
       BeginDrawing();
       ClearBackground(BLACK);
       

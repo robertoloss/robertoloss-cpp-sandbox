@@ -23,8 +23,8 @@ public:
   void CollisionWithScreenBorder (int screenWidth, int screenHeight);
   void Move(); 
   void EventListeners();
-	CollisionTile CheckCollisionWithTiles(std::vector<Tile>* collisions);
-	void CollisionManager(CollisionTile);
+	bool CheckCollisionWithTiles(Tile*);
+	void CollisionManager(bool, Tile*);
     
   Vector2 position; 
 	Vector2 oldPosition;
