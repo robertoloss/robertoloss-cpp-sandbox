@@ -60,7 +60,9 @@ void Player::Move() {
 
 	position.x += velocity.x;
 	position.y += velocity.y;
-
+//	if(fabs(oldPosition.x - position.x) > 1 ) {
+//		printf("\noldPosition.x : %f, position.x %f", oldPosition.x, position.x);
+//	}
 	if (velocity.x > 0) velocity.x -= 0.5f;
 	if (velocity.x < 0) velocity.x += 0.5f;
 
@@ -71,19 +73,111 @@ void Player::Show() {
   DrawRectangleV(position, size, MAROON);
 };
 
-bool Player::CheckCollisionWithTiles(Tile* tile) {
-	return position.x > tile->position.x + tile->size.x &&
-		position.x < tile->position.x + tile->size.x + size.x &&
-		position.y > tile->position.y - tile->size.y &&
-		position.y < tile->position.y + tile->size.y + size.y;
+bool Player::CheckIfCollision(Tile* tile) {
+	//  if (position.x < tile->position.x + tile->size.x &&
+	//	position.x + size.x > tile->position.x &&
+	//	position.y < tile->position.y + tile->size.y &&
+	//	position.y + size.y > tile->position.y) {
+	//	std::cout << "hit" << std::endl;
+	//}
+	return (
+		position.x < tile->position.x + tile->size.x &&
+		position.x + size.x > tile->position.x &&
+		position.y < tile->position.y + tile->size.y &&
+		position.y + size.y > tile->position.y
+	);
 };
 
-void Player::CollisionManager(bool collision, Tile* tile) {
-	if (collision == true) {
-		if (oldPosition.x < position.x) position.x = tile->position.x - size.x;
-		if (oldPosition.x > position.x) position.x = tile->position.x + size.x;
-		if (oldPosition.y < position.y) position.y = tile->position.y - size.y;
-		if (oldPosition.y > position.y) position.y = tile->position.y + size.y;
+float Player::overlap(direction direction, Tile* tile) {
+	switch (direction) {
+		case top:
+			return (tile->position.y + tile->size.y )  - position.y;
+		case bottom:
+			return (position.y + size.y) - tile->position.y;
+		case left:
+			return (tile->position.x + tile->size.x) - position.x;
+		case right:
+			return (position.x + size.x) - tile->position.x;
 	}
+}
+
+float Player::axisOverlap(MovementAxis axis, Tile* tile) {
+	switch (axis) {
+		case xAxis:
+			if (position.x + size.x > tile->position.x + tile->size.x) {
+				return (tile->position.x + tile->size.x) - position.x;
+			} else if (position.x < tile->position.x) {
+				return (position.x + size.x) - tile->position.x;
+			}
+			return size.x;
+		case yAxis:
+			if (position.y + size.y > tile->position.y + tile->size.y) {
+				return (tile->position.y + tile->size.y) - position.y;
+			} else if (position.y < tile->position.y) {
+				return (position.y + size.y) - tile->position.y;
+			}
+			return size.y;
+	}
+}
+
+CollisionTile Player::CollisionDirection(Tile* tile) {
+	float pLeft = position.x;
+	float pRight = position.x + size.x;
+	float pBottom = position.y + size.y;
+	float pTop = position.y;
+	float tLeft = tile->position.x;
+	float tRight = tile->position.x + tile->size.x;
+	float tTop = tile-> position.y;
+	float tBottom = tile->position.y + tile->size.y;
+	
+
+	if (oldPosition.x < position.x &&
+			pLeft < tLeft &&
+			overlap(right,tile) < axisOverlap(yAxis, tile) 
+	) {
+		std::cout << "Coll Dir: Right" << std::endl;
+		return {*tile, right};
+	}
+
+	if (oldPosition.x > position.x &&
+			pRight > tRight &&
+			overlap(left,tile) < axisOverlap(yAxis,tile)
+	) return {*tile, left};
+
+	if (oldPosition.y < position.y &&
+			pTop < tTop &&
+			overlap(bottom, tile) < axisOverlap(xAxis,tile) 
+		) return {*tile, bottom};
+
+	if (oldPosition.y > position.y &&
+			pBottom > tBottom &&
+			overlap(top,tile) < axisOverlap(xAxis,tile)
+	) return {*tile, top};
+	return {*tile,top};
 };
+
+void Player::CollisionManager(CollisionTile collision) {
+	switch (collision.collisionSide) {
+		case right:
+			position.x = collision.tile.position.x - (size.x);
+			velocity.x = 0;
+			std::cout << "right collision" << std::endl;
+			break;
+		 case left:
+			position.x = collision.tile.position.x + collision.tile.size.x;
+			velocity.x = 0;
+			std::cout << "left collision" << std::endl;
+			break;
+		 case top:
+			position.y = collision.tile.position.y + collision.tile.size.y;
+			velocity.y = 0;
+			*jumping = false;
+			break;
+		 case bottom:
+			std::cout << "Manager: bottom" << std::endl;
+			position.y = collision.tile.position.y - (size.y);
+			velocity.y = 0;
+			break;
+		}
+} 
 

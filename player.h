@@ -11,7 +11,6 @@ struct Tile {
 enum direction {top, bottom, left, right};
 
 struct CollisionTile {
-	bool didCollisionHappen;
 	Tile tile;
 	direction collisionSide;	
 };
@@ -23,8 +22,11 @@ public:
   void CollisionWithScreenBorder (int screenWidth, int screenHeight);
   void Move(); 
   void EventListeners();
-	bool CheckCollisionWithTiles(Tile*);
-	void CollisionManager(bool, Tile*);
+	bool CheckIfCollision(Tile*);
+	CollisionTile CollisionDirection(Tile*);
+	void CollisionManager(CollisionTile);
+	float overlap(direction, Tile*);
+	float axisOverlap(MovementAxis, Tile*);
     
   Vector2 position; 
 	Vector2 oldPosition;
