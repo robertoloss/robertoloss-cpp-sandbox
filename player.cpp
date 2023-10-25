@@ -57,6 +57,10 @@ void Player::EventListeners() {
 void Player::Move() {
 	oldPosition.x = position.x;
 	oldPosition.y = position.y;
+	pLeft = position.x;
+	pRight = position.x + size.x;
+	pTop = position.y;
+	pBottom = position.y + size.y;
 
 	position.x += velocity.x;
 	position.y += velocity.y;
@@ -74,12 +78,6 @@ void Player::Show() {
 };
 
 bool Player::CheckIfCollision(Tile* tile) {
-	//  if (position.x < tile->position.x + tile->size.x &&
-	//	position.x + size.x > tile->position.x &&
-	//	position.y < tile->position.y + tile->size.y &&
-	//	position.y + size.y > tile->position.y) {
-	//	std::cout << "hit" << std::endl;
-	//}
 	return (
 		position.x < tile->position.x + tile->size.x &&
 		position.x + size.x > tile->position.x &&
@@ -121,18 +119,9 @@ float Player::axisOverlap(MovementAxis axis, Tile* tile) {
 }
 
 CollisionTile Player::CollisionDirection(Tile* tile) {
-	float pLeft = position.x;
-	float pRight = position.x + size.x;
-	float pBottom = position.y + size.y;
-	float pTop = position.y;
-	float tLeft = tile->position.x;
-	float tRight = tile->position.x + tile->size.x;
-	float tTop = tile-> position.y;
-	float tBottom = tile->position.y + tile->size.y;
-	
 
 	if (oldPosition.x < position.x &&
-			pLeft < tLeft &&
+			pLeft < tile->left &&
 			overlap(right,tile) < axisOverlap(yAxis, tile) 
 	) {
 		std::cout << "Coll Dir: Right" << std::endl;
@@ -140,17 +129,17 @@ CollisionTile Player::CollisionDirection(Tile* tile) {
 	}
 
 	if (oldPosition.x > position.x &&
-			pRight > tRight &&
+			pRight > tile->right &&
 			overlap(left,tile) < axisOverlap(yAxis,tile)
 	) return {*tile, left};
 
 	if (oldPosition.y < position.y &&
-			pTop < tTop &&
+			pTop < tile->top &&
 			overlap(bottom, tile) < axisOverlap(xAxis,tile) 
 		) return {*tile, bottom};
 
 	if (oldPosition.y > position.y &&
-			pBottom > tBottom &&
+			pBottom > tile->bottom &&
 			overlap(top,tile) < axisOverlap(xAxis,tile)
 	) return {*tile, top};
 	return {*tile,top};

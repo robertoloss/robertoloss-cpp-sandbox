@@ -6,6 +6,10 @@
 struct Tile {
   Vector2 size;
   Vector2 position;
+	float top = Tile::position.y;
+	float bottom = Tile::position.y + Tile::size.y;
+	float left = Tile::position.x;
+	float right = Tile::position.x + Tile::size.x;
 };
 
 enum direction {top, bottom, left, right};
@@ -30,9 +34,13 @@ public:
     
   Vector2 position; 
 	Vector2 oldPosition;
+	float pLeft = Player::position.x;
+	float pRight;
+	float pTop;
+	float pBottom;
   Vector2 size = { (float)50, (float)50 };
   Vector2 velocity = { (float)0, (float)0 };
-  Vector2 maxVelocity = {(float)7, (float)20}; 
+  Vector2 maxVelocity = {(float)5, (float)10}; 
 	MovementAxis axis;
   bool jumpingTmp = false;
   bool jumpingEnabledTmp = true;
