@@ -40,7 +40,7 @@ public:
 	float pBottom;
   Vector2 size = { (float)50, (float)50 };
   Vector2 velocity = { (float)0, (float)0 };
-  Vector2 maxVelocity = { (float)3, (float)15 }; 
+  Vector2 maxVelocity = { (float)5, (float)15 }; 
 	MovementAxis axis;
   bool jumpingTmp = false;
   bool jumpingEnabledTmp = true;
@@ -49,7 +49,7 @@ public:
   float maxJumpVelocity =  5.0f;
   float jumpInitialHeight = 0;
   float jumpMaxHeight = size.y*1.5;
-  float jumpVelocity = 2.5f;
+  float jumpVelocity = 3.0f;
   float initialJumpVelocity = jumpVelocity;
   float jumpAcceleration = 0.5f;
   float initialJumpAcceleration = jumpAcceleration;

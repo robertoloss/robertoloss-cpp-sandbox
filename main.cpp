@@ -32,11 +32,12 @@ std::vector<std::vector<int> > gameMap { // 24 by 12
 
 int main(void)
 {
-    const int screenWidth = gameMap[0].size() * 50;
-    const int screenHeight = gameMap.size() * 50;
+    const float screenWidth = gameMap[0].size() * 50;
+    const float screenHeight = gameMap.size() * 50;
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
     SetTargetFPS(60);               
+		SetConfigFlags(FLAG_VSYNC_HINT);
 
     std::vector<Tile> collisions;
     
@@ -80,7 +81,7 @@ int main(void)
 		  std::string strVelX = velX + std::to_string(player.velocity.x);
 			std::string strVelY = velY + std::to_string(player.velocity.y);
 			
-			DrawText(strVelX.c_str(), 10,0,16, WHITE);
+			DrawText(strVelX.c_str(), 10, 0, 16, WHITE);
 			DrawText(strVelY.c_str(), 10,20, 16, WHITE);
 			DrawFPS(10, 40);
       EndDrawing();

@@ -84,7 +84,7 @@ void Player::CheckIfCollision(Tile* tile) {
 		pRight > tile->left &&
 		pLeft < tile->right	
 	) {
-		std::cout << "top collision" << std::endl;
+		//std::cout << "top collision" << std::endl;
 		velocity.y = 0;
 		position.y = tile->bottom;
 		*jumping = false;
@@ -97,7 +97,7 @@ void Player::CheckIfCollision(Tile* tile) {
 		pBottom > tile->top &&
 		pTop < tile->bottom - maxVelocity.y
 	) {
-		std::cout << "right collision" << std::endl;
+		//std::cout << "right collision" << std::endl;
 		velocity.x = 0;
 		position.x = tile->position.x - size.x;
 		return;
@@ -109,7 +109,7 @@ void Player::CheckIfCollision(Tile* tile) {
 		pBottom > tile->top &&
 		pTop < tile->bottom - maxVelocity.y
 	) {
-		std::cout << "left collision" << std::endl;
+		// std::cout << "left collision" << std::endl;
 		velocity.x = 0;
 		position.x = tile->right;
 		return;
@@ -122,7 +122,7 @@ void Player::CheckIfCollision(Tile* tile) {
 		pRight > tile->left &&
 		pLeft < tile->right	
 	) {
-		std::cout << "bottom collision" << std::endl;
+		// std::cout << "bottom collision" << std::endl;
 		velocity.y = 0;
 		position.y = tile->top - size.y;	
 	}
