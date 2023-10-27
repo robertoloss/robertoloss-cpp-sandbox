@@ -65,7 +65,9 @@ void Player::Move() {
 	position.x += velocity.x;
 	position.y += velocity.y;
 
-	if (velocity.x < maxVelocity.x) velocity.x += 0.5f;
+	if (velocity.x > 0) velocity.x -= 0.5f;
+	if (velocity.x < 0) velocity.x += 0.5f;
+  
 	if (velocity.y < maxVelocity.y) velocity.y++;
 }
 
@@ -83,16 +85,16 @@ bool Player::CheckIfCollision(Tile* tile) {
 };
 
 CollisionTile Player::CollisionDirection(Tile* tile) {
-	if (velocity.x > 0) {
-		if (velocity.y < 0) {
-			float deltaY = tile->bottom - oldPosition.y;
-			float velXvelYRatio = velocity.x / velocity.y;
-			float inter = oldPosition.x + (deltaY * velXvelYRatio);
-			if (inter < tile->left) return {*tile, right};
-			else return {*tile, top};
-		}
-	}
-
+	if (velocity.x > 0) return {*tile, right};
+//	if (velocity.x > 0) {
+//		if (velocity.y < 0) {
+//			float deltaY = tile->bottom - oldPosition.y;
+//			float velXvelYRatio = velocity.x / velocity.y;
+//			float inter = oldPosition.x + (deltaY * velXvelYRatio);
+//			if (inter < tile->left) return {*tile, right};
+//			else return {*tile, top};
+//		}
+//	}
 };
 
 void Player::CollisionManager(CollisionTile collision) {
@@ -122,9 +124,5 @@ void Player::CollisionManager(CollisionTile collision) {
 		 default:
 			std::cout << "Default" << std::endl;
 		}
-
-
-
-
 } 
 

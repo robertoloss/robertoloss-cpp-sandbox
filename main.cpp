@@ -75,9 +75,13 @@ int main(void)
       } 
       player.Show();
 			
-		  std::string strVelX = std::to_string(player.position.x);
+			std::string velX = "velocity.x : ";
+			std::string velY = "velocity.i : ";
+		  std::string strVelX = velX + std::to_string(player.velocity.x);
+			std::string strVelY = velY + std::to_string(player.velocity.y);
 
 			DrawText(strVelX.c_str(), 0,0,16, WHITE);
+			DrawText(strVelY.c_str(), 0,20, 16, WHITE);
       EndDrawing();
     }
   
