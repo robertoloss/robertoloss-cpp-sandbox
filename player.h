@@ -10,6 +10,7 @@ struct Tile {
 	float bottom = Tile::position.y + Tile::size.y;
 	float left = Tile::position.x;
 	float right = Tile::position.x + Tile::size.x;
+	bool collision;
 };
 
 enum direction {top, bottom, left, right};

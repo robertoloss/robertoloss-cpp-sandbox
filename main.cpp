@@ -61,19 +61,23 @@ int main(void)
 		  for (auto tile: collisions) {
 				Tile* tilePtr = &tile;
 				if (player.CheckIfCollision(tilePtr)) {
-					std::cout << "collision" << std::endl;
 					player.CollisionManager(player.CollisionDirection(tilePtr));
-			 }
+			  }	
 			};
 
       BeginDrawing();
       ClearBackground(BLACK);
       
       for (auto tile : collisions) {
-        DrawRectangleV(tile.position, tile.size, BLUE);
+        if (tile.collision == false) {
+					DrawRectangleV(tile.position, tile.size, BLUE);
+				} else DrawRectangleV(tile.position, tile.size, WHITE);
       } 
-
       player.Show();
+			
+		  std::string strVelX = std::to_string(player.position.x);
+
+			DrawText(strVelX.c_str(), 0,0,16, WHITE);
       EndDrawing();
     }
   
