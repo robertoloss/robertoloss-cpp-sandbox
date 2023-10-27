@@ -61,6 +61,7 @@ int main(void)
 		  for (auto tile: collisions) {
 				Tile* tilePtr = &tile;
 				if (player.CheckIfCollision(tilePtr)) {
+					std::cout << "collision" << std::endl;
 					player.CollisionManager(player.CollisionDirection(tilePtr));
 			 }
 			};
