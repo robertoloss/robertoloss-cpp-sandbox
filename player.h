@@ -10,7 +10,6 @@ struct Tile {
 	float bottom = Tile::position.y + Tile::size.y;
 	float left = Tile::position.x;
 	float right = Tile::position.x + Tile::size.x;
-	bool collision;
 };
 
 enum direction {top, bottom, left, right};
@@ -27,7 +26,7 @@ public:
   void CollisionWithScreenBorder (int screenWidth, int screenHeight);
   void Move(); 
   void EventListeners();
-	bool CheckIfCollision(Tile*);
+	void CheckIfCollision(Tile*);
 	CollisionTile CollisionDirection(Tile*);
 	void CollisionManager(CollisionTile);
 	float overlap(direction, Tile*);
@@ -41,15 +40,15 @@ public:
 	float pBottom;
   Vector2 size = { (float)50, (float)50 };
   Vector2 velocity = { (float)0, (float)0 };
-  Vector2 maxVelocity = { (float)5, (float)10 }; 
+  Vector2 maxVelocity = { (float)3, (float)15 }; 
 	MovementAxis axis;
   bool jumpingTmp = false;
   bool jumpingEnabledTmp = true;
   bool * jumping = &jumpingTmp;
   bool * jumpingEnabled = &jumpingEnabledTmp;
-  float maxJumpVelocity = 10.0f;
+  float maxJumpVelocity =  5.0f;
   float jumpInitialHeight = 0;
-  float jumpMaxHeight = size.y*2.5;
+  float jumpMaxHeight = size.y*1.5;
   float jumpVelocity = 2.5f;
   float initialJumpVelocity = jumpVelocity;
   float jumpAcceleration = 0.5f;

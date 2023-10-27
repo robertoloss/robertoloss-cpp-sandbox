@@ -12,10 +12,11 @@ void Player::CollisionWithScreenBorder (int screenWidth, int screenHeight)
     velocity.x = 0;
     position.x <= 0 ? position.x = 0 : position.x = (screenWidth-size.x);
   } 
-  if (position.y < 0 || position.y+size.y > screenHeight) {
+  if (position.y + velocity.y < 0 || position.y + size.y + velocity.y > screenHeight) {
+		std::cout << "vertical jamboree" << std::endl;
     velocity.y = 0;
     *jumping = false;
-    if (position.y < 0) {
+    if (position.y + velocity.y < 0) {
       position.y = 0;
     } else {
       position.y = (screenHeight-size.y);
@@ -75,54 +76,56 @@ void Player::Show() {
   DrawRectangleV(position, size, MAROON);
 };
 
-bool Player::CheckIfCollision(Tile* tile) {
-	return (
-		pLeft < tile->right &&
+void Player::CheckIfCollision(Tile* tile) {
+	if (
+		velocity.y < 0 &&
+		pTop + velocity.y < tile->bottom &&
+		pBottom + velocity.y > tile->bottom &&
 		pRight > tile->left &&
-		pTop < tile->bottom &&
-		pBottom > tile->top
-	);
+		pLeft < tile->right	
+	) {
+		std::cout << "top collision" << std::endl;
+		velocity.y = 0;
+		position.y = tile->bottom;
+		*jumping = false;
+		return;
+	}
+	if (
+		velocity.x > 0 &&
+		pRight + velocity.x > tile->left &&
+		pLeft + velocity.x < tile->left &&
+		pBottom > tile->top &&
+		pTop < tile->bottom - maxVelocity.y
+	) {
+		std::cout << "right collision" << std::endl;
+		velocity.x = 0;
+		position.x = tile->position.x - size.x;
+		return;
+	}
+	if (
+		velocity.x < 0 &&
+		pLeft + velocity.x < tile->right &&
+	  pRight + velocity.x > tile->right &&
+		pBottom > tile->top &&
+		pTop < tile->bottom - maxVelocity.y
+	) {
+		std::cout << "left collision" << std::endl;
+		velocity.x = 0;
+		position.x = tile->right;
+		return;
+	}
+	
+	if (
+		velocity.y > 0 &&
+		pBottom + velocity.y > tile->top &&
+		pTop + velocity.y < tile->top &&
+		pRight > tile->left &&
+		pLeft < tile->right	
+	) {
+		std::cout << "bottom collision" << std::endl;
+		velocity.y = 0;
+		position.y = tile->top - size.y;	
+	}
 };
 
-CollisionTile Player::CollisionDirection(Tile* tile) {
-	if (velocity.x > 0) return {*tile, right};
-//	if (velocity.x > 0) {
-//		if (velocity.y < 0) {
-//			float deltaY = tile->bottom - oldPosition.y;
-//			float velXvelYRatio = velocity.x / velocity.y;
-//			float inter = oldPosition.x + (deltaY * velXvelYRatio);
-//			if (inter < tile->left) return {*tile, right};
-//			else return {*tile, top};
-//		}
-//	}
-};
-
-void Player::CollisionManager(CollisionTile collision) {
-	collision.tile.collision = true;
-	switch (collision.collisionSide) {
-		case right:
-			pLeft = collision.tile.position.x - size.x;
-			velocity.x = 0;
-			std::cout << "right collision" << std::endl;
-			break;
-		 case left:
-			pLeft = collision.tile.position.x + collision.tile.size.x;
-			velocity.x = 0;
-			std::cout << "left collision" << std::endl;
-			break;
-		 case top:
-			position.y = collision.tile.position.y + collision.tile.size.y;
-			velocity.y = 0;
-			*jumping = false;
-			std::cout << "top collision" << std::endl;
-			break;
-		 case bottom:
-			position.y = collision.tile.position.y - (size.y);
-			velocity.y = 0;
-			std::cout << "bottom collision" << std::endl;
-			break;
-		 default:
-			std::cout << "Default" << std::endl;
-		}
-} 
-
+ 
