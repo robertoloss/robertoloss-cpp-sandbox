@@ -63,13 +63,16 @@ void Player::Move() {
 	pTop = position.y;
 	pBottom = position.y + size.y;
 
-	position.x += velocity.x;
-	position.y += velocity.y;
+  float num = (float)1000 / (float)16;
 
 	if (velocity.x > 0) velocity.x -= 0.5f;
 	if (velocity.x < 0) velocity.x += 0.5f;
   
-	if (velocity.y < maxVelocity.y) velocity.y++;
+	if (velocity.y < maxVelocity.y) velocity.y += gravity;
+
+	position.x += velocity.x * GetFrameTime() * num;
+	position.y += velocity.y * GetFrameTime() * num;
+
 }
 
 void Player::Show() {
