@@ -38,7 +38,6 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
     // SetTargetFPS(60);               
 		SetConfigFlags(FLAG_VSYNC_HINT);
-
     std::vector<Tile> collisions;
     
     for (float Y = 0; Y < gameMap.size(); Y++) {
