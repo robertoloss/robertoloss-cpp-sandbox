@@ -5,6 +5,7 @@
 
 struct Tile {
   Vector2 size;
+	Vector2 gridPosition;
   Vector2 position;
 	float top = Tile::position.y;
 	float bottom = Tile::position.y + Tile::size.y;

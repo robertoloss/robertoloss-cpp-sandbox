@@ -28,31 +28,44 @@ std::vector<std::vector<int> > gameMap { // 24 by 12
   { 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , },
 };
 
- 
+struct Map {
+	Vector2 position;
+	Vector2 size;
+}; 
+
+float tileSize = 100.0f;
 
 int main(void)
 {
-    const float screenWidth = gameMap[0].size() * 50.0f;
-    const float screenHeight = gameMap.size() * 50.0f;
+    const float screenWidth = gameMap[0].size() * ( tileSize / 2 ); 
+    const float screenHeight = gameMap.size() * ( tileSize / 2 ); 
+		
+		Map map;
+		map.size = {
+			(float)gameMap[0].size(),
+			(float)gameMap.size(),
+		};
+		map.position = {
+			0.0f,
+			screenHeight - map.size.y,
+		};
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
     // SetTargetFPS(60);               
 		SetConfigFlags(FLAG_VSYNC_HINT);
-    std::vector<Tile> collisions;
+    std::vector<Tile*> collisions;
     
     for (float Y = 0; Y < gameMap.size(); Y++) {
       for (float X = 0; X < gameMap[0].size(); X++) {
         if (gameMap[Y][X] == 1.0f) {
-          Vector2 size = {(float)50, (float)50};
-          Vector2 position = {(float)X*size.x, (float)Y*size.y};
-          Tile newTile = {size, position};
-          collisions.push_back(newTile);
+          Vector2 size = {tileSize, tileSize};
+          Vector2 gridPosition = {(float)X, (float)Y};
+          Tile newTile = {size, gridPosition};
+          collisions.push_back(&newTile);
         };
       }
     }
-
-		std::vector<Tile> * collisionsPtr = &collisions;
-    
+ 
     Player player;
     player.position.x = screenWidth/2.0f;
     player.position.y = screenHeight/2.0f;
@@ -61,17 +74,23 @@ int main(void)
       player.EventListeners();
       player.Move(); 
       player.CollisionWithScreenBorder(screenWidth, screenHeight);
+
+			for (auto tile: collisions) {
+				tile->position = {
+					map.position.x + (tile->position.x * tile->size.x),
+					map.position.y + (tile->position.y * tile->size.y),
+				};
+			};
 			
 		  for (auto tile: collisions) {
-				Tile* tilePtr = &tile;
-				player.CheckIfCollision(tilePtr);
+				player.CheckIfCollision(tile);
 			};
 
       BeginDrawing();
       ClearBackground(BLACK);
       
       for (auto tile : collisions) {
-				DrawRectangleV(tile.position, tile.size, BLUE);
+				DrawRectangleV(tile->position, tile->size, BLUE);
       } 
       player.Show();
 			

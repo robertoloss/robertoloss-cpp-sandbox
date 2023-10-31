@@ -13,7 +13,6 @@ void Player::CollisionWithScreenBorder (int screenWidth, int screenHeight)
     position.x <= 0 ? position.x = 0 : position.x = (screenWidth-size.x);
   } 
   if (position.y + velocity.y < 0 || position.y + size.y + velocity.y > screenHeight) {
-		std::cout << "vertical jamboree" << std::endl;
     velocity.y = 0;
     *jumping = false;
     if (position.y + velocity.y < 0) {
