@@ -33,6 +33,8 @@ struct Map {
 	Vector2 size;
 }; 
 
+void DrawMap (Map, std::vector<Tile*>);
+
 float tileSize = 100.0f;
 
 int main(void)
@@ -42,8 +44,8 @@ int main(void)
 		
 		Map map;
 		map.size = {
-			(float)gameMap[0].size(),
-			(float)gameMap.size(),
+			(float)gameMap[0].size() * tileSize,
+			(float)gameMap.size() * tileSize,
 		};
 		map.position = {
 			0.0f,
@@ -55,14 +57,17 @@ int main(void)
 		SetConfigFlags(FLAG_VSYNC_HINT);
     std::vector<Tile*> collisions;
     
-    for (float Y = 0; Y < gameMap.size(); Y++) {
-      for (float X = 0; X < gameMap[0].size(); X++) {
-        if (gameMap[Y][X] == 1.0f) {
+    for (int Y = 0; Y < gameMap.size(); Y++) {
+      for (int X = 0; X < gameMap[0].size(); X++) {
+        if (gameMap[Y][X] == 1) {
+					// printf("\nIt's a one");
           Vector2 size = {tileSize, tileSize};
           Vector2 gridPosition = {(float)X, (float)Y};
-          Tile newTile = {size, gridPosition};
-          collisions.push_back(&newTile);
-        };
+          Tile * newTile = new Tile {size, gridPosition};
+          collisions.push_back(newTile);
+        } else {
+					// printf("\nIt's a zero!");
+				}
       }
     }
  
@@ -70,17 +75,35 @@ int main(void)
     player.position.x = screenWidth/2.0f;
     player.position.y = screenHeight/2.0f;
     
+		DrawMap(map, collisions);
+		// for (int i = 0; i < collisions.size(); i++) {
+		// 	Tile * tile = collisions[i];
+		// 	tile->position = {
+		// 		map.position.x + (tile->gridPosition.x * tile->size.x),
+		// 		map.position.y + (tile->gridPosition.y * tile->size.y),
+		// 	};
+		// 	tile->top = tile->position.y;
+		// 	tile->bottom = tile->position.y + tile->size.y;
+		// 	tile->left = tile->position.x;
+		// 	tile->right = tile->position.x + tile->size.x;
+		// 	//printf("\n\n%d", i);
+		// 	//printf("\ntile grid: %f %f", tile->gridPosition.x, tile->gridPosition.y);
+		// 	//printf("\ntile pos: %f %f", tile->position.x, tile->position.y);
+		// };
+		
     while (!WindowShouldClose()) {
       player.EventListeners();
       player.Move(); 
       player.CollisionWithScreenBorder(screenWidth, screenHeight);
 
-			for (auto tile: collisions) {
-				tile->position = {
-					map.position.x + (tile->position.x * tile->size.x),
-					map.position.y + (tile->position.y * tile->size.y),
-				};
-			};
+			
+		 	
+		// 	for (auto tile: collisions) {
+		// 		std::cout << tile->gridPosition.x << " : " << tile->position.x << std::endl;
+		// 		std::cout << tile->gridPosition.y << " : " << tile->position.y << std::endl;
+		// 		std::cout << std::endl;
+		// 	}
+			
 			
 		  for (auto tile: collisions) {
 				player.CheckIfCollision(tile);
@@ -92,6 +115,7 @@ int main(void)
       for (auto tile : collisions) {
 				DrawRectangleV(tile->position, tile->size, BLUE);
       } 
+
       player.Show();
 			
 			std::string velX = "velocity.x : ";
@@ -111,3 +135,19 @@ int main(void)
     return 0;
 }
 
+void DrawMap(Map map, std::vector<Tile*> collisions) {
+	for (int i = 0; i < collisions.size(); i++) {
+		Tile * tile = collisions[i];
+		tile->position = {
+			map.position.x + (tile->gridPosition.x * tile->size.x),
+			map.position.y + (tile->gridPosition.y * tile->size.y),
+		};
+		tile->top = tile->position.y;
+		tile->bottom = tile->position.y + tile->size.y;
+		tile->left = tile->position.x;
+		tile->right = tile->position.x + tile->size.x;
+		//printf("\n\n%d", i);
+		//printf("\ntile grid: %f %f", tile->gridPosition.x, tile->gridPosition.y);
+		//printf("\ntile pos: %f %f", tile->position.x, tile->position.y);
+	}
+}
