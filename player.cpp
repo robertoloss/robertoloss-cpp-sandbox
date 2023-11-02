@@ -69,47 +69,50 @@ void Player::Move(Map * map) {
   
 	if (velocity.y < maxVelocity.y) velocity.y += gravity;
 	
-	bool mapShouldMove = false;
+	bool mapShouldMoveX = false;
+	bool mapShouldMoveY = false;
 
-	if (
+	if (  // hits mapBox's right wall
 				velocity.x > 0 && 
-				position.x + velocity.x > map->box.right && 
-				map->position.x + map->size.y > map->screenWidth
+				position.x + size.x + velocity.x > map->box.right && 
+				map->position.x + map->size.x > map->screenWidth
 	) {
-				mapShouldMove = true;
-				position.x = map->box.right;
+				mapShouldMoveX = true;
+				position.x = map->box.right - size.x;
 				map->position.x -= velocity.x * GetFrameTime() * num; 
 	} 
-	if (
+	if (  // hits mapBox's left wall
 				velocity.x < 0 &&
 				position.x + velocity.x < map->box.left &&
 				map->position.x < 0
 	) {
-				mapShouldMove = true;
+				mapShouldMoveX = true;
 				position.x = map->box.left;
 				map->position.x -= velocity.x * GetFrameTime() * num;
 	} 
-	if (
+	if (  // hits mapBox's ceiling
 				velocity.y < 0 &&
 				position.y + velocity.y <= map->box.top &&
 				map->position.y < 0		
 	) {
-				mapShouldMove = true;
+				mapShouldMoveY = true;
 				position.y = map->box.top;
 				map->position.y -= velocity.y * GetFrameTime() * num;
 	}
-	if (
+	if ( // hits mapBox's floor
 				velocity.y > 0 &&
-				position.y + velocity.y >= map->box.bottom &&
-				map->position.y > map->screenHeight - map->size.y
+				position.y + size.y + velocity.y >= map->box.bottom &&
+				map->position.y + map->size.y > map->screenHeight
 	) {
-				mapShouldMove = true;
-				position.y = map->box.bottom;
-				map->position.y -= velocity.y;
+				mapShouldMoveY = true;
+				position.y = map->box.bottom - size.y;
+				map->position.y -= velocity.y * GetFrameTime() * num;
 	}
 
-	if (mapShouldMove == false) {
+	if (mapShouldMoveX == false) {
 			position.x += velocity.x * GetFrameTime() * num;
+	}
+	if (mapShouldMoveY == false) {
 			position.y += velocity.y * GetFrameTime() * num;
 	}
 
@@ -120,8 +123,8 @@ void Player::Show() {
   DrawRectangleV(position, size, MAROON);
 };
 
-void Player::CheckIfCollision(Tile* tile) {
-	if (
+void Player::CheckIfCollision(Tile* tile, Map * map) {
+	if ( // TOP
 		velocity.y < 0 &&
 		pTop + velocity.y < tile->bottom &&
 		pBottom + velocity.y > tile->bottom &&
@@ -134,7 +137,7 @@ void Player::CheckIfCollision(Tile* tile) {
 		*jumping = false;
 		return;
 	}
-	if (
+	if ( // 
 		velocity.x > 0 &&
 		pRight + velocity.x > tile->left &&
 		pLeft + velocity.x < tile->left &&
@@ -142,7 +145,7 @@ void Player::CheckIfCollision(Tile* tile) {
 		pTop < tile->bottom - maxVelocity.y
 	) {
 		//std::cout << "right collision" << std::endl;
-		velocity.x = 0;
+		velocity.x = 0;	
 		position.x = tile->position.x - size.x;
 		return;
 	}
@@ -167,8 +170,11 @@ void Player::CheckIfCollision(Tile* tile) {
 		pLeft < tile->right	
 	) {
 		// std::cout << "bottom collision" << std::endl;
-		velocity.y = 0;
+		velocity.y = 0;	
 		position.y = tile->top - size.y;	
+		if (position.y+size.y > map->box.bottom && map->position.y+map->size.y > map->screenHeight) {
+			map->position.y -= ((position.y + size.y) - map->box.bottom);
+		}
 	}
 };
 

@@ -92,7 +92,7 @@ int main(void)
 			SetMap(map, collisions);
 			
 		  for (auto tile: collisions) {
-				player.CheckIfCollision(tile);
+				player.CheckIfCollision(tile,&map);
 			};
 
       BeginDrawing();
@@ -114,6 +114,11 @@ int main(void)
 			DrawText(strVelY.c_str(), 10, 20, 16, WHITE);
 			DrawFPS(10, 40);
 			DrawText(strGetFrame.c_str(), 10,  60, 16, WHITE);
+			
+			// Vector2 boxPosition = {map.box.left, map.box.top};
+		  // Vector2 boxSize = {screenWidth/2, screenHeight/2};
+			// Color boxColor = { 253, 249, 0, 80 };
+			// DrawRectangleV(boxPosition, boxSize, boxColor );
       EndDrawing();
     }
   

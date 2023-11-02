@@ -42,7 +42,7 @@ public:
   void CollisionWithScreenBorder (int screenWidth, int screenHeight);
   void Move(Map *); 
   void EventListeners();
-	void CheckIfCollision(Tile*);
+	void CheckIfCollision(Tile*, Map*);
 	CollisionTile CollisionDirection(Tile*);
 	void CollisionManager(CollisionTile);
 	float overlap(direction, Tile*);
