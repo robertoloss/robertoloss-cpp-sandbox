@@ -28,12 +28,9 @@ std::vector<std::vector<int> > gameMap { // 24 by 12
   { 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , },
 };
 
-struct Map {
-	Vector2 position;
-	Vector2 size;
-}; 
+ 
 
-void DrawMap (Map, std::vector<Tile*>);
+void SetMap (Map, std::vector<Tile*>);
 
 float tileSize = 100.0f;
 
@@ -43,6 +40,16 @@ int main(void)
     const float screenHeight = gameMap.size() * ( tileSize / 2 ); 
 		
 		Map map;
+
+		map.screenHeight = screenHeight;
+		map.screenWidth = screenWidth;
+		map.box = {
+			screenWidth / 4,
+			(screenWidth / 4) * 3,
+			screenHeight / 4,
+			(screenHeight / 4) * 3
+		};
+
 		map.size = {
 			(float)gameMap[0].size() * tileSize,
 			(float)gameMap.size() * tileSize,
@@ -75,35 +82,14 @@ int main(void)
     player.position.x = screenWidth/2.0f;
     player.position.y = screenHeight/2.0f;
     
-		DrawMap(map, collisions);
-		// for (int i = 0; i < collisions.size(); i++) {
-		// 	Tile * tile = collisions[i];
-		// 	tile->position = {
-		// 		map.position.x + (tile->gridPosition.x * tile->size.x),
-		// 		map.position.y + (tile->gridPosition.y * tile->size.y),
-		// 	};
-		// 	tile->top = tile->position.y;
-		// 	tile->bottom = tile->position.y + tile->size.y;
-		// 	tile->left = tile->position.x;
-		// 	tile->right = tile->position.x + tile->size.x;
-		// 	//printf("\n\n%d", i);
-		// 	//printf("\ntile grid: %f %f", tile->gridPosition.x, tile->gridPosition.y);
-		// 	//printf("\ntile pos: %f %f", tile->position.x, tile->position.y);
-		// };
+		SetMap(map, collisions);
 		
     while (!WindowShouldClose()) {
       player.EventListeners();
-      player.Move(); 
+      player.Move(&map); 
       player.CollisionWithScreenBorder(screenWidth, screenHeight);
-
-			
 		 	
-		// 	for (auto tile: collisions) {
-		// 		std::cout << tile->gridPosition.x << " : " << tile->position.x << std::endl;
-		// 		std::cout << tile->gridPosition.y << " : " << tile->position.y << std::endl;
-		// 		std::cout << std::endl;
-		// 	}
-			
+			SetMap(map, collisions);
 			
 		  for (auto tile: collisions) {
 				player.CheckIfCollision(tile);
@@ -135,7 +121,7 @@ int main(void)
     return 0;
 }
 
-void DrawMap(Map map, std::vector<Tile*> collisions) {
+void SetMap(Map map, std::vector<Tile*> collisions) {
 	for (int i = 0; i < collisions.size(); i++) {
 		Tile * tile = collisions[i];
 		tile->position = {

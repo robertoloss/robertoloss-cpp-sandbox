@@ -3,6 +3,21 @@
 #include <vector>
 #include <string>
 
+struct mapBox {
+	float left;
+	float right;
+	float top;
+	float bottom;
+};
+
+struct Map {
+	Vector2 position;
+	Vector2 size;
+	mapBox box;
+	float screenWidth;
+	float screenHeight;
+};
+
 struct Tile {
   Vector2 size;
 	Vector2 gridPosition;
@@ -25,7 +40,7 @@ enum MovementAxis {xAxis, yAxis};
 class Player  {
 public:
   void CollisionWithScreenBorder (int screenWidth, int screenHeight);
-  void Move(); 
+  void Move(Map *); 
   void EventListeners();
 	void CheckIfCollision(Tile*);
 	CollisionTile CollisionDirection(Tile*);

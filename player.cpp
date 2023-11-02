@@ -54,7 +54,7 @@ void Player::EventListeners() {
   } 
 }
 
-void Player::Move() {
+void Player::Move(Map * map) {
 	oldPosition.x = position.x;
 	oldPosition.y = position.y;
 	pLeft = position.x;
@@ -63,15 +63,57 @@ void Player::Move() {
 	pBottom = position.y + size.y;
 
   float num = (float)1000 / (float)16;
-
+	
 	if (velocity.x > 0) velocity.x -= 0.5f;
 	if (velocity.x < 0) velocity.x += 0.5f;
   
 	if (velocity.y < maxVelocity.y) velocity.y += gravity;
+	
+	bool mapShouldMove = false;
 
-	position.x += velocity.x * GetFrameTime() * num;
-	position.y += velocity.y * GetFrameTime() * num;
+	if (
+				velocity.x > 0 && 
+				position.x + velocity.x > map->box.right && 
+				map->position.x + map->size.y > map->screenWidth
+	) {
+				mapShouldMove = true;
+				position.x = map->box.right;
+				map->position.x -= velocity.x * GetFrameTime() * num; 
+	} 
+	if (
+				velocity.x < 0 &&
+				position.x + velocity.x < map->box.left &&
+				map->position.x < 0
+	) {
+				mapShouldMove = true;
+				position.x = map->box.left;
+				map->position.x -= velocity.x * GetFrameTime() * num;
+	} 
+	if (
+				velocity.y < 0 &&
+				position.y + velocity.y <= map->box.top &&
+				map->position.y < 0		
+	) {
+				mapShouldMove = true;
+				position.y = map->box.top;
+				map->position.y -= velocity.y * GetFrameTime() * num;
+	}
+	if (
+				velocity.y > 0 &&
+				position.y + velocity.y >= map->box.bottom &&
+				map->position.y > map->screenHeight - map->size.y
+	) {
+				mapShouldMove = true;
+				position.y = map->box.bottom;
+				map->position.y -= velocity.y;
+	}
 
+	if (mapShouldMove == false) {
+			position.x += velocity.x * GetFrameTime() * num;
+			position.y += velocity.y * GetFrameTime() * num;
+	}
+
+	
 }
 
 void Player::Show() {
