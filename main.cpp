@@ -13,7 +13,7 @@ std::vector<std::vector<int> > gameMap { // 24 by 12
   { 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , },
   { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
   { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
-  { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 1 , 1 , 0 , 0 , 1 , },
+  { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 1 , 1 , 0 , 0 , 1 , },
   { 1 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
   { 1 , 0 , 0 , 0 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
   { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
@@ -110,10 +110,10 @@ int main(void)
 			std::string strVelY = velY + std::to_string(player.velocity.y);
 			std::string strGetFrame = std::to_string(GetFrameTime());
 
-			DrawText(strVelX.c_str(), 10,  0, 16, WHITE);
-			DrawText(strVelY.c_str(), 10, 20, 16, WHITE);
+			// DrawText(strVelX.c_str(), 10,  0, 16, WHITE);
+			// DrawText(strVelY.c_str(), 10, 20, 16, WHITE);
+			// DrawText(strGetFrame.c_str(), 10,  60, 16, WHITE);
 			DrawFPS(10, 40);
-			DrawText(strGetFrame.c_str(), 10,  60, 16, WHITE);
 			
 			// Vector2 boxPosition = {map.box.left, map.box.top};
 		  // Vector2 boxSize = {screenWidth/2, screenHeight/2};
@@ -141,4 +141,5 @@ void SetMap(Map map, std::vector<Tile*> collisions) {
 		//printf("\ntile grid: %f %f", tile->gridPosition.x, tile->gridPosition.y);
 		//printf("\ntile pos: %f %f", tile->position.x, tile->position.y);
 	}
+
 }

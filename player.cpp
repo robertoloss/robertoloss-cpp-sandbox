@@ -41,6 +41,18 @@ void Player::EventListeners() {
     *jumping = false;
   }
 
+	if (IsKeyPressed(KEY_S)) {
+		if (size.x == 50.0f && abs(velocity.y) > 1 ) {
+			size.x = 100.0f;
+			size.y = 100.0f;
+			// printf("\nbigger");
+		} else if (abs(velocity.y) > 1) {
+			size.x = 50.0f;
+			size.y = 50.0f;
+			// printf("\nsmaller");
+		}
+	}
+
   if (IsKeyDown(KEY_ESCAPE)) WindowShouldClose();
   
   if (*jumping) {
@@ -115,7 +127,8 @@ void Player::Move(Map * map) {
 	if (mapShouldMoveY == false) {
 			position.y += velocity.y * GetFrameTime() * num;
 	}
-
+	// printf("\n\nx : %f", position.x);
+	// printf("\ny : %f", position.y);
 	
 }
 
@@ -131,7 +144,7 @@ void Player::CheckIfCollision(Tile* tile, Map * map) {
 		pRight > tile->left &&
 		pLeft < tile->right	
 	) {
-		//std::cout << "top collision" << std::endl;
+		// std::cout << "top collision" << std::endl;
 		velocity.y = 0;
 		position.y = tile->bottom;
 		*jumping = false;
@@ -144,7 +157,7 @@ void Player::CheckIfCollision(Tile* tile, Map * map) {
 		pBottom > tile->top &&
 		pTop < tile->bottom - maxVelocity.y
 	) {
-		//std::cout << "right collision" << std::endl;
+		// std::cout << "right collision" << std::endl;
 		velocity.x = 0;	
 		position.x = tile->position.x - size.x;
 		return;
@@ -169,11 +182,13 @@ void Player::CheckIfCollision(Tile* tile, Map * map) {
 		pRight > tile->left &&
 		pLeft < tile->right	
 	) {
-		// std::cout << "bottom collision" << std::endl;
+		// std::cout << "\nbottom collision\n" << std::endl;
 		velocity.y = 0;	
 		position.y = tile->top - size.y;	
-		if (position.y+size.y > map->box.bottom && map->position.y+map->size.y > map->screenHeight) {
-			map->position.y -= ((position.y + size.y) - map->box.bottom);
+		if (position.y + size.y > map->box.bottom && map->position.y+map->size.y > map->screenHeight) {
+			float delta = ((position.y + size.y) - map->box.bottom);
+			map->position.y -= delta;
+			position.y -= (delta + (size.y/15));
 		}
 	}
 };
