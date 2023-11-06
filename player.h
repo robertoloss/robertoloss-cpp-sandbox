@@ -49,16 +49,16 @@ public:
 	float axisOverlap(MovementAxis, Tile*);
     
   Vector2 position; 
-		Vector2 oldPosition;
-		float pLeft = Player::position.x;
-		float pRight;
-		float pTop;
-		float pBottom;
-		float gravity = 0.04f;
-		Vector2 size = { (float)50, (float)50 };
-		Vector2 velocity = { (float)0, (float)0 };
-		Vector2 maxVelocity = { (float)4.5, (float)18 }; 
-		MovementAxis axis;
+	Vector2 oldPosition;
+	float pLeft = Player::position.x;
+	float pRight;
+	float pTop;
+	float pBottom;
+	float gravity = 0.04f;
+	Vector2 size = { (float)50, (float)50 };
+	Vector2 velocity = { (float)0, (float)0 };
+	Vector2 maxVelocity = { (float)4.5, (float)18 }; 
+	MovementAxis axis;
   bool jumpingTmp = false;
   bool jumpingEnabledTmp = true;
   bool * jumping = &jumpingTmp;

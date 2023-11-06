@@ -45,11 +45,11 @@ void Player::EventListeners() {
 		if (size.x == 50.0f && abs(velocity.y) > 1 ) {
 			size.x = 100.0f;
 			size.y = 100.0f;
-			// printf("\nbigger");
+			// // ("\nbigger");
 		} else if (abs(velocity.y) > 1) {
 			size.x = 50.0f;
 			size.y = 50.0f;
-			// printf("\nsmaller");
+			// // ("\nsmaller");
 		}
 	}
 
@@ -85,19 +85,21 @@ void Player::Move(Map * map) {
 	bool mapShouldMoveY = false;
 
 	if (  // hits mapBox's right wall
-				velocity.x > 0 && 
+				velocity.x > 1.0f && 
 				position.x + size.x + velocity.x > map->box.right && 
 				map->position.x + map->size.x > map->screenWidth
 	) {
+				// ("\nmapBox RIGHT");	
 				mapShouldMoveX = true;
 				position.x = map->box.right - size.x;
 				map->position.x -= velocity.x * GetFrameTime() * num; 
 	} 
 	if (  // hits mapBox's left wall
-				velocity.x < 0 &&
+				velocity.x < 1.0f &&
 				position.x + velocity.x < map->box.left &&
 				map->position.x < 0
 	) {
+				// ("\nmapbox LEFT");
 				mapShouldMoveX = true;
 				position.x = map->box.left;
 				map->position.x -= velocity.x * GetFrameTime() * num;
@@ -107,15 +109,17 @@ void Player::Move(Map * map) {
 				position.y + velocity.y <= map->box.top &&
 				map->position.y < 0		
 	) {
+				// ("\nmapbox TOP");
 				mapShouldMoveY = true;
 				position.y = map->box.top;
 				map->position.y -= velocity.y * GetFrameTime() * num;
 	}
 	if ( // hits mapBox's floor
-				velocity.y > 0 &&
+				velocity.y > gravity &&
 				position.y + size.y + velocity.y >= map->box.bottom &&
 				map->position.y + map->size.y > map->screenHeight
-	) {
+	) {	
+				// ("\nmapbox BOTTOM");
 				mapShouldMoveY = true;
 				position.y = map->box.bottom - size.y;
 				map->position.y -= velocity.y * GetFrameTime() * num;
@@ -127,8 +131,8 @@ void Player::Move(Map * map) {
 	if (mapShouldMoveY == false) {
 			position.y += velocity.y * GetFrameTime() * num;
 	}
-	// printf("\n\nx : %f", position.x);
-	// printf("\ny : %f", position.y);
+	// // ("\n\nx : %f", position.x);
+	// // ("\ny : %f", position.y);
 	
 }
 
@@ -172,6 +176,11 @@ void Player::CheckIfCollision(Tile* tile, Map * map) {
 		// std::cout << "left collision" << std::endl;
 		velocity.x = 0;
 		position.x = tile->right;
+		// if (position.x < map->box.left && map->position.x < 0) {
+		// 	float delta = (map->box.left - position.x);
+		// 	map->position.x += delta;
+		// 	position.y -= (delta + (size.y/15));
+		// }
 		return;
 	}
 	
@@ -183,13 +192,15 @@ void Player::CheckIfCollision(Tile* tile, Map * map) {
 		pLeft < tile->right	
 	) {
 		// std::cout << "\nbottom collision\n" << std::endl;
+		
 		velocity.y = 0;	
 		position.y = tile->top - size.y;	
-		if (position.y + size.y > map->box.bottom && map->position.y+map->size.y > map->screenHeight) {
-			float delta = ((position.y + size.y) - map->box.bottom);
-			map->position.y -= delta;
-			position.y -= (delta + (size.y/15));
-		}
+		// if (position.y + size.y > map->box.bottom && map->position.y+map->size.y > map->screenHeight) {
+		// 	float delta = ((position.y + size.y) - map->box.bottom);
+		// 	map->position.y += delta;
+		// 	// position.y -= (delta + (size.y/15));
+		// }
+		return;
 	}
 };
 
