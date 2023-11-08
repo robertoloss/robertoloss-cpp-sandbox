@@ -106,6 +106,8 @@ int main(void)
 			
 			std::string velX = "velocity.x : ";
 			std::string velY = "velocity.y : ";
+			std::string maxVelX = "max velocity.x : ";
+			std::string maxVelY = "max velocity.y : ";
 			std::string jumping = "jumping : ";
 			std::string jumpVelocity = "jump velocity : ";
 			std::string jumpMaxVel = "jump MAX velocity : ";
@@ -114,10 +116,12 @@ int main(void)
 
 		  std::string strVelX = velX + std::to_string(player.velocity.x);
 			std::string strVelY = velY + std::to_string(player.velocity.y);
+			std::string strMaxVelY = maxVelY + std::to_string(player.maxVelocity.y);
+			std::string strMaxVelX = maxVelX + std::to_string(player.maxVelocity.x);
 			std::string strJump = jumping + (*player.jumping ? "true" : "false");
 			std::string strJumpVel = jumpVelocity + std::to_string(player.jumpVelocity); 
-			std::string strJumpMaxVel = jumpVelocity + std::to_string(player.maxJumpVelocity); 
-			std::string strJumpMaxHeight = jumpVelocity + std::to_string(player.jumpMaxHeight); 
+			std::string strJumpMaxVel = jumpMaxVel + std::to_string(player.maxJumpVelocity); 
+			std::string strJumpMaxHeight = jumpMaxHeight + std::to_string(player.jumpMaxHeight); 
 			std::string strJumpAcc = jumpAcc + std::to_string(player.jumpAcceleration); 
 
 			std::string strGetFrame = std::to_string(GetFrameTime());
@@ -129,6 +133,8 @@ int main(void)
 			DrawText(strJumpMaxVel.c_str(), 10, 80, 16, YELLOW);
 			DrawText(strJumpMaxHeight.c_str(), 10, 100, 16, YELLOW);
 			DrawText(strJumpAcc.c_str(), 10, 120, 16, YELLOW);
+			DrawText(strMaxVelY.c_str(), 10, 140, 16, YELLOW);
+			DrawText(strMaxVelX.c_str(), 10, 160, 16, YELLOW);
 			// DrawText(strGetFrame.c_str(), 10,  60, 16, WHITE);
 			// DrawFPS(10, 40);
 			

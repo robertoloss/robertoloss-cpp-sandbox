@@ -24,13 +24,22 @@ void Player::CollisionWithScreenBorder (int screenWidth, int screenHeight)
 };
 
 void Player::EventListeners() {
-  if (IsKeyDown(KEY_RIGHT) && abs(velocity.x) < maxVelocity.x) {
+  if (IsKeyPressed(KEY_RIGHT)) {
 		goRight = true;
+		goLeft = false;
+	}
+	if (IsKeyReleased(KEY_RIGHT)) {
+		goRight = false;
 	}
 
-  if (IsKeyDown(KEY_LEFT) && abs(velocity.x) < maxVelocity.x) {
-		goLeft = true
+  if (IsKeyPressed(KEY_LEFT)) {
+		goLeft = true;
+		goRight = false;
 	};
+
+  if (IsKeyReleased(KEY_LEFT)) {
+		goLeft = false;
+	}
 
   if (IsKeyPressed(KEY_X) && *jumpingEnabled == true) {
     *jumping = true;
@@ -59,8 +68,8 @@ void Player::EventListeners() {
 
   if (IsKeyDown(KEY_ESCAPE)) WindowShouldClose();
 
-	if (goLeft) velocity.x -= 1.5f;
-	if (goRight) velocity.y += 1.5f;
+	if (goLeft && velocity.x > -maxVelocity.x) velocity.x -= 1.5f;
+	if (goRight && velocity.x < maxVelocity.x) velocity.x += 1.5f;
   
   if (*jumping) {
     if (jumpInitialHeight - position.y  >= jumpMaxHeight) {
