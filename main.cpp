@@ -13,15 +13,15 @@ std::vector<std::vector<int> > gameMap { // 24 by 12
   { 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , },
   { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
   { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
-  { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 1 , 1 , 0 , 0 , 1 , },
+  { 1 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 0 , 0 , 1 , },
   { 1 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
-  { 1 , 0 , 0 , 0 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
+  { 1 , 0 , 0 , 0 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 0 , 0 , 0 , 0 , 0 , 1 , },
   { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
-  { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
-  { 1 , 1 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 1 , 1 , 0 , 0 , 0 , 0 , 1 , 1 , 1 , 0 , 1 , },
-  { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 0 , 0 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
-  { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 0 , 0 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
-  { 1 , 0 , 0 , 0 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 0 , 0 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
+  { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 0 , 0 , 0 , 1 , },
+  { 1 , 1 , 1 , 0 , 0 , 0 , 1 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 1 , },
+  { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
+  { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
+  { 1 , 0 , 0 , 0 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 0 , 0 , 0 , 0 , 1 , 1 , 1 , 0 , 0 , 0 , 1 , 1 , 1 , },
   { 1 , 0 , 0 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
   { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
   { 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , },
@@ -105,20 +105,37 @@ int main(void)
       player.Show();
 			
 			std::string velX = "velocity.x : ";
-			std::string velY = "velocity.i : ";
+			std::string velY = "velocity.y : ";
+			std::string jumping = "jumping : ";
+			std::string jumpVelocity = "jump velocity : ";
+			std::string jumpMaxVel = "jump MAX velocity : ";
+			std::string jumpMaxHeight = "jump MAX height : ";
+			std::string jumpAcc = "jump accelaration : ";
+
 		  std::string strVelX = velX + std::to_string(player.velocity.x);
 			std::string strVelY = velY + std::to_string(player.velocity.y);
+			std::string strJump = jumping + (*player.jumping ? "true" : "false");
+			std::string strJumpVel = jumpVelocity + std::to_string(player.jumpVelocity); 
+			std::string strJumpMaxVel = jumpVelocity + std::to_string(player.maxJumpVelocity); 
+			std::string strJumpMaxHeight = jumpVelocity + std::to_string(player.jumpMaxHeight); 
+			std::string strJumpAcc = jumpAcc + std::to_string(player.jumpAcceleration); 
+
 			std::string strGetFrame = std::to_string(GetFrameTime());
 
-			// DrawText(strVelX.c_str(), 10,  0, 16, WHITE);
-			// DrawText(strVelY.c_str(), 10, 20, 16, WHITE);
+			DrawText(strVelX.c_str(), 10,  0, 16, YELLOW);
+			DrawText(strVelY.c_str(), 10, 20, 16, YELLOW);
+			DrawText(strJump.c_str(), 10, 40, 16, YELLOW);
+			DrawText(strJumpVel.c_str(), 10, 60, 16, YELLOW);	
+			DrawText(strJumpMaxVel.c_str(), 10, 80, 16, YELLOW);
+			DrawText(strJumpMaxHeight.c_str(), 10, 100, 16, YELLOW);
+			DrawText(strJumpAcc.c_str(), 10, 120, 16, YELLOW);
 			// DrawText(strGetFrame.c_str(), 10,  60, 16, WHITE);
-			DrawFPS(10, 40);
+			// DrawFPS(10, 40);
 			
-			Vector2 boxPosition = {map.box.left, map.box.top};
-		  Vector2 boxSize = {screenWidth/2, screenHeight/2};
-			Color boxColor = { 253, 249, 0, 80 };
-			DrawRectangleV(boxPosition, boxSize, boxColor );
+			// Vector2 boxPosition = {map.box.left, map.box.top};
+		  // Vector2 boxSize = {screenWidth/2, screenHeight/2};
+			// Color boxColor = { 253, 249, 0, 80 };
+			// DrawRectangleV(boxPosition, boxSize, boxColor );
       EndDrawing();
     }
   

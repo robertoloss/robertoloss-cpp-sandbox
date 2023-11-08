@@ -8,6 +8,10 @@ struct mapBox {
 	float right;
 	float top;
 	float bottom;
+	float deltaLeft = 0.0;
+	float deltaRight = 0.0;
+	float deltaBottom = 0.0;
+	float deltaTop = 0.0;
 };
 
 struct Map {
@@ -63,12 +67,14 @@ public:
   bool jumpingEnabledTmp = true;
   bool * jumping = &jumpingTmp;
   bool * jumpingEnabled = &jumpingEnabledTmp;
+	bool goLeft;
+	bool goRight;
   float maxJumpVelocity =  7.0f;
   float jumpInitialHeight = 0;
   float jumpMaxHeight = size.y*1.5;
-  float jumpVelocity = 2.5f;
+  float jumpVelocity = 1.5f;
   float initialJumpVelocity = jumpVelocity;
-  float jumpAcceleration = 0.3f;
+  float jumpAcceleration = 0.5f;
   float initialJumpAcceleration = jumpAcceleration;
   float jumpAccIncrease = 0.2f;
   int xPressedCount = 0; 
