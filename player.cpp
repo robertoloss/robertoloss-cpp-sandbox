@@ -72,7 +72,7 @@ void Player::EventListeners() {
 	if (goRight && velocity.x < maxVelocity.x) velocity.x += 1.5f;
   
   if (*jumping) {
-    if (velocity.y < -maxVelocity.y) {
+    if (jumpInitialHeight - position.y  >= jumpMaxHeight) {
       *jumping = false;
       jumpAcceleration = initialJumpAcceleration;         
       jumpVelocity = initialJumpVelocity;
