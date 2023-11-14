@@ -20,6 +20,8 @@ struct Map {
 	mapBox box;
 	float screenWidth;
 	float screenHeight;
+	bool mapShouldMoveX;
+	bool mapShouldMoveY;
 };
 
 struct Tile {

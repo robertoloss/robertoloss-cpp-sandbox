@@ -72,7 +72,7 @@ void Player::EventListeners() {
 	if (goRight && velocity.x < maxVelocity.x) velocity.x += 1.5f;
   
   if (*jumping) {
-    if (jumpInitialHeight - position.y  >= jumpMaxHeight) {
+    if (velocity.y < -maxVelocity.y) {
       *jumping = false;
       jumpAcceleration = initialJumpAcceleration;         
       jumpVelocity = initialJumpVelocity;
@@ -97,8 +97,8 @@ void Player::Move(Map * map) {
   
 	if (velocity.y < maxVelocity.y) velocity.y += gravity;
 	
-	bool mapShouldMoveX = false;
-	bool mapShouldMoveY = false;
+	map->mapShouldMoveX = false;
+	map->mapShouldMoveY = false;
 
 	if (  // hits mapBox's right wall
 				velocity.x > 1.0f && 
@@ -106,7 +106,7 @@ void Player::Move(Map * map) {
 				map->position.x + map->size.x > map->screenWidth
 	) {
 				// ("\nmapBox RIGHT");	
-				mapShouldMoveX = true;
+				map->mapShouldMoveX = true;
 				position.x = (map->box.right + map->box.deltaRight) - size.x;
 				map->position.x -= velocity.x * GetFrameTime() * num; 
 	} 
@@ -116,7 +116,7 @@ void Player::Move(Map * map) {
 				map->position.x < 0
 	) {
 				// ("\nmapbox LEFT");
-				mapShouldMoveX = true;
+				map->mapShouldMoveX = true;
 				position.x = map->box.left - map->box.deltaLeft;
 				map->position.x -= velocity.x * GetFrameTime() * num;
 	} 
@@ -126,9 +126,9 @@ void Player::Move(Map * map) {
 				map->position.y < 0		
 	) {
 				// ("\nmapbox TOP");
-				mapShouldMoveY = true;
+				map->mapShouldMoveY = true;
 				position.y = map->box.top - map->box.deltaTop;
-				map->position.y -= velocity.y * GetFrameTime() * num;
+				map->position.y -= velocity.y * GetFrameTime() * num; 
 	}
 	if ( // hits mapBox's floor
 				velocity.y > gravity &&
@@ -136,15 +136,15 @@ void Player::Move(Map * map) {
 				map->position.y + map->size.y > map->screenHeight
 	) {	
 				// ("\nmapbox BOTTOM");
-				mapShouldMoveY = true;
+				map->mapShouldMoveY = true;
 				position.y = (map->box.bottom + map->box.deltaBottom) - size.y;
 				map->position.y -= velocity.y * GetFrameTime() * num;
 	}
 
-	if (mapShouldMoveX == false) {
+	if (map->mapShouldMoveX == false) {
 			position.x += velocity.x * GetFrameTime() * num;
 	}
-	if (mapShouldMoveY == false) {
+	if (map->mapShouldMoveY == false) {
 			position.y += velocity.y * GetFrameTime() * num;
 	}
 	if (map->position.y + map->size.y <= map->screenHeight) {
@@ -159,6 +159,8 @@ void Player::Move(Map * map) {
   if (map->position.x  >= 0) {
 		map->box.deltaLeft = 0;
 	}
+
+	
 	// // ("\n\nx : %f", position.x);
 	// // ("\ny : %f", position.y);
 	
@@ -243,6 +245,11 @@ void Player::CheckIfCollision(Tile* tile, Map * map) {
 			map->box.deltaBottom = delta;
 		}
 		return;
+	}
+	if(position.y + size.y > map->screenHeight - tile->size.y && velocity.y == 0) {
+		float delta = (position.y + size.y) - (map->screenHeight -tile->size.y);
+		position.y -= delta;
+		map->position.y -= delta;
 	}
 };
 
