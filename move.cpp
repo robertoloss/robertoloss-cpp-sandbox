@@ -78,21 +78,19 @@ void Player::Move(Map * map) {
 	if (map->mapShouldMoveY == false) {
 			position.y += velocity.y * GetFrameTime() * num;
 	}
-	if (map->position.y + map->size.y <= map->screenHeight) {
+	if (position.y < map->box.bottom - size.y || position.y > map->box.bottom) {
 		map->box.deltaBottom = 0;
 	}
-	if (map->position.y  >= 0) {
+	if (position.y > map->box.top || position.y < map->box.top - size.y) {
 		map->box.deltaTop = 0;
 	}
-	if (map->position.x + map->size.x <= map->screenWidth) {
+	if (position.x < map->box.right - size.x || position.x > map->box.right) {
 		map->box.deltaRight = 0;
 	}
-  if (map->position.x  >= 0) {
+  if (position.x > map->box.left || position.x < map->box.left - size.x) {
 		map->box.deltaLeft = 0;
 	}
 
 	
-	// // ("\n\nx : %f", position.x);
-	// // ("\ny : %f", position.y);
 	
 }
