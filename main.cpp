@@ -114,6 +114,8 @@ int main(void)
 			std::string jumpMaxHeight = "jump MAX height : ";
 			std::string jumpAcc = "jump accelaration : ";
 			std::string jumpInitHeight = "jump initial height : ";
+			std::string hitTopBox = "hitMantopBox : ";
+
 
 		  std::string strVelX = velX + std::to_string(player.velocity.x);
 			std::string strVelY = velY + std::to_string(player.velocity.y);
@@ -125,6 +127,7 @@ int main(void)
 			std::string strJumpMaxHeight = jumpMaxHeight + std::to_string(player.jumpMaxHeight); 
 			std::string strJumpAcc = jumpAcc + std::to_string(player.jumpAcceleration); 
 			std::string strJumpInitialHeight = jumpInitHeight + std::to_string(player.jumpInitialHeight); 
+			std::string strHitTopBox = hitTopBox + std::to_string(player.hitMapboxTop); 
 
 			std::string strGetFrame = std::to_string(GetFrameTime());
 
@@ -138,13 +141,14 @@ int main(void)
 			DrawText(strMaxVelY.c_str(), 10, 140, 16, YELLOW);
 			DrawText(strMaxVelX.c_str(), 10, 160, 16, YELLOW);
 			DrawText(strJumpInitialHeight.c_str(), 10, 180, 16, YELLOW);
+			DrawText(strHitTopBox.c_str(), 10, 200, 16, YELLOW);
 			// DrawText(strGetFrame.c_str(), 10,  60, 16, WHITE);
 			// DrawFPS(10, 40);
 			
-			Vector2 boxPosition = {map.box.left, map.box.top};
-		  Vector2 boxSize = {screenWidth/2, screenHeight/2};
-			Color boxColor = { 253, 249, 0, 80 };
-			DrawRectangleV(boxPosition, boxSize, boxColor );
+			//Vector2 boxPosition = {map.box.left, map.box.top};
+		  //Vector2 boxSize = {screenWidth/2, screenHeight/2};
+			//Color boxColor = { 253, 249, 0, 80 };
+			//DrawRectangleV(boxPosition, boxSize, boxColor );
       EndDrawing();
     }
   

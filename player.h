@@ -20,6 +20,7 @@ struct Map {
 	mapBox box;
 	float screenWidth;
 	float screenHeight;
+	float initialPositionJump;
 	bool mapShouldMoveX;
 	bool mapShouldMoveY;
 };
@@ -71,6 +72,7 @@ public:
   bool * jumpingEnabled = &jumpingEnabledTmp;
 	bool goLeft;
 	bool goRight;
+	bool hitMapboxTop = false;
   float maxJumpVelocity =  7.0f;
   float jumpInitialHeight = 0;
   float jumpMaxHeight = size.y*1.5;
@@ -79,6 +81,8 @@ public:
   float jumpAcceleration = 0.5f;
   float initialJumpAcceleration = jumpAcceleration;
   float jumpAccIncrease = 0.2f;
+	float alreadyJumped = 0;
+	float deltaMapYMovement = 0;
   int xPressedCount = 0; 
 
   void Show();
