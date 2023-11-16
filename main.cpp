@@ -47,7 +47,7 @@ int main(void)
 			screenWidth / 4,
 			(screenWidth / 4) * 3,
 			screenHeight / 4,
-			(screenHeight / 4) * 3
+			(screenHeight / 8) * 5
 		};
 
 		map.size = {
@@ -114,7 +114,9 @@ int main(void)
 			std::string jumpMaxHeight = "jump MAX height : ";
 			std::string jumpAcc = "jump accelaration : ";
 			std::string jumpInitHeight = "jump initial height : ";
-			std::string hitTopBox = "hitMantopBox : ";
+			std::string hitTopBox = "hitMapTopBox : ";
+			std::string goRightStr = "goRight : ";
+			std::string goLeftStr = "goLeft : ";
 
 
 		  std::string strVelX = velX + std::to_string(player.velocity.x);
@@ -128,6 +130,8 @@ int main(void)
 			std::string strJumpAcc = jumpAcc + std::to_string(player.jumpAcceleration); 
 			std::string strJumpInitialHeight = jumpInitHeight + std::to_string(player.jumpInitialHeight); 
 			std::string strHitTopBox = hitTopBox + std::to_string(player.hitMapboxTop); 
+			std::string strGoRight = goRightStr + std::to_string(player.goRight); 
+			std::string strGoLeft = goLeftStr + std::to_string(player.goLeft); 
 
 			std::string strGetFrame = std::to_string(GetFrameTime());
 
@@ -142,6 +146,8 @@ int main(void)
 			DrawText(strMaxVelX.c_str(), 10, 160, 16, YELLOW);
 			DrawText(strJumpInitialHeight.c_str(), 10, 180, 16, YELLOW);
 			DrawText(strHitTopBox.c_str(), 10, 200, 16, YELLOW);
+			DrawText(strGoRight.c_str(), 10, 220, 16, YELLOW);
+			DrawText(strGoLeft.c_str(), 10, 240, 16, YELLOW);
 			// DrawText(strGetFrame.c_str(), 10,  60, 16, WHITE);
 			// DrawFPS(10, 40);
 			

@@ -64,7 +64,7 @@ public:
 	float gravity = 0.04f;
 	Vector2 size = { (float)50, (float)50 };
 	Vector2 velocity = { (float)0, (float)0 };
-	Vector2 maxVelocity = { (float)4.5, (float)18 }; 
+	Vector2 maxVelocity = { (float)4.5, (float)5.0 }; 
 	MovementAxis axis;
   bool jumpingTmp = false;
   bool jumpingEnabledTmp = true;
@@ -75,10 +75,10 @@ public:
 	bool hitMapboxTop = false;
   float maxJumpVelocity =  7.0f;
   float jumpInitialHeight = 0;
-  float jumpMaxHeight = size.y*1.5;
-  float jumpVelocity = 1.5f;
+  float jumpMaxHeight = size.y*2.5;
+  float jumpVelocity = 2.5f;
   float initialJumpVelocity = jumpVelocity;
-  float jumpAcceleration = 0.5f;
+  float jumpAcceleration = 0.1f;
   float initialJumpAcceleration = jumpAcceleration;
   float jumpAccIncrease = 0.2f;
 	float alreadyJumped = 0;
