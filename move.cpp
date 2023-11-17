@@ -68,6 +68,7 @@ void Player::Move(Map * map) {
 				map->initialPositionJump = map->position.y; 
 				hitMapboxTop = true;
 			} 
+			jumpInitialHeight = 0;
 			deltaMapYMovement = (map->position.y - map->initialPositionJump);
 			map->mapShouldMoveY = true;
 			position.y = map->box.top - map->box.deltaTop;

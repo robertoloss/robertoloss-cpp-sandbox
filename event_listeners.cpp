@@ -30,6 +30,7 @@ void Player::EventListeners() {
     jumpVelocity = initialJumpVelocity;
     jumpAcceleration = initialJumpAcceleration;
     jumpInitialHeight = position.y;
+		hitMapboxTop = false;
   }
 
   if (IsKeyReleased(KEY_X)) {
