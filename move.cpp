@@ -80,7 +80,10 @@ void Player::Move(Map * map) {
 			jumpAcceleration = initialJumpAcceleration;         
 			jumpVelocity = initialJumpVelocity;
 		} else {
-			if (abs(velocity.y) < maxJumpVelocity && position.y > 0) velocity.y -= jumpVelocity;
+			if (abs(velocity.y) < maxJumpVelocity && position.y > 0) {
+				velocity.y -= jumpVelocity;
+				jumpVelocityX += incrementJumpVelX;
+			}
 		}
 	} else if (*jumping && hitMapboxTop == true) {
 		if (alreadyJumped + deltaMapYMovement >= jumpMaxHeight) {
@@ -90,9 +93,13 @@ void Player::Move(Map * map) {
 			jumpAcceleration = initialJumpAcceleration;         
 			jumpVelocity = initialJumpVelocity;
 		} else {
-			if (abs(velocity.y) < maxJumpVelocity && position.y > 0) velocity.y -= jumpVelocity;
+			if (abs(velocity.y) < maxJumpVelocity && position.y > 0) {
+				velocity.y -= jumpVelocity;
+				jumpVelocityX += incrementJumpVelX;
+			}
 		}
 	} else { // that is, if jumping is false
+		jumpVelocityX = 0;
 		velocity.y += gravity;
 		alreadyJumped = 0;
 		deltaMapYMovement = 0;
@@ -122,8 +129,8 @@ void Player::Move(Map * map) {
 		map->box.deltaLeft = 0;
 	}
 
-	if (goLeft && velocity.x > -maxVelocity.x) velocity.x -= 2.0f;
-	if (goRight && velocity.x < maxVelocity.x) velocity.x += 2.0f;
+	if (goLeft && velocity.x > -maxVelocity.x) velocity.x -= (2.0f + jumpVelocityX);
+	if (goRight && velocity.x < maxVelocity.x) velocity.x += (2.0f + jumpVelocityX);
 	//if (goRight == false && goLeft == false && velocity.x > 0) velocity.x -= 0.1f;
 	//if (goLeft == false && goRight == false && velocity.x < 0) velocity.x += 0.1f;
 

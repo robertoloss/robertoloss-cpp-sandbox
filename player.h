@@ -75,10 +75,12 @@ public:
 	bool hitMapboxTop = false;
   float maxJumpVelocity =  7.0f;
   float jumpInitialHeight = 0;
-  float jumpMaxHeight = size.y*2.5;
-  float jumpVelocity = 2.5f;
+  float jumpMaxHeight = size.y*2.0;
+  float jumpVelocity = 0.5f;
+	float jumpVelocityX = 0;
+	float incrementJumpVelX = 0.2f;
   float initialJumpVelocity = jumpVelocity;
-  float jumpAcceleration = 0.1f;
+  float jumpAcceleration = 1.5;
   float initialJumpAcceleration = jumpAcceleration;
   float jumpAccIncrease = 0.2f;
 	float alreadyJumped = 0;

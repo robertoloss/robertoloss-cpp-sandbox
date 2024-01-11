@@ -151,10 +151,10 @@ int main(void)
 			// DrawText(strGetFrame.c_str(), 10,  60, 16, WHITE);
 			// DrawFPS(10, 40);
 			
-			Vector2 boxPosition = {map.box.left, map.box.top};
-		  Vector2 boxSize = {screenWidth/2, (screenHeight/8)*3};
-			Color boxColor = { 253, 249, 0, 80 };
-			DrawRectangleV(boxPosition, boxSize, boxColor );
+			// Vector2 boxPosition = {map.box.left, map.box.top};
+		  // Vector2 boxSize = {screenWidth/2, (screenHeight/8)*3};
+			// Color boxColor = { 253, 249, 0, 80 };
+			// DrawRectangleV(boxPosition, boxSize, boxColor );
       EndDrawing();
     }
   
