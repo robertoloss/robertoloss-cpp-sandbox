@@ -12,10 +12,10 @@ void Player::CollisionWithScreenBorder (int screenWidth, int screenHeight)
     velocity.x = 0;
     position.x <= 0 ? position.x = 0 : position.x = (screenWidth-size.x);
   } 
-  if (position.y < 0 || position.y+size.y > screenHeight) {
+  if (position.y + velocity.y < 0 || position.y + size.y + velocity.y > screenHeight) {
     velocity.y = 0;
     *jumping = false;
-    if (position.y < 0) {
+    if (position.y + velocity.y < 0) {
       position.y = 0;
     } else {
       position.y = (screenHeight-size.y);
@@ -23,132 +23,8 @@ void Player::CollisionWithScreenBorder (int screenWidth, int screenHeight)
   } 
 };
 
-void Player::EventListeners() {
-  if (IsKeyDown(KEY_RIGHT) && abs(velocity.x) < maxVelocity.x) velocity.x += 1.5f;
-
-  if (IsKeyDown(KEY_LEFT) && abs(velocity.x) < maxVelocity.x) velocity.x -= 1.5f;
-
-  if (IsKeyPressed(KEY_X) && *jumpingEnabled == true) {
-    *jumping = true;
-    xPressedCount += 1;
-    velocity.y = 0;
-    jumpVelocity = initialJumpVelocity;
-    jumpAcceleration = initialJumpAcceleration;
-    jumpInitialHeight = position.y;
-  }
-
-  if (IsKeyReleased(KEY_X)) {
-    *jumping = false;
-  }
-
-  if (IsKeyDown(KEY_ESCAPE)) WindowShouldClose();
-  
-  if (*jumping) {
-    if (jumpInitialHeight - position.y  >= jumpMaxHeight) {
-      *jumping = false;
-      jumpAcceleration = initialJumpAcceleration;         
-      jumpVelocity = initialJumpVelocity;
-    } else {
-      if (abs(velocity.y) < maxJumpVelocity && position.y > 0) velocity.y -= jumpVelocity;
-    }
-  }
-  
-}
-
-
-void Player::Move() {
-  position.x += velocity.x;
-  position.y += velocity.y;
- 
-  if (velocity.x > 0) velocity.x -= 0.5f;
-  if (velocity.x < 0) velocity.x += 0.5f;
- 
-  if (velocity.y < maxVelocity.y) velocity.y++;
-}
-
 void Player::Show() {
   DrawRectangleV(position, size, MAROON);
 };
 
-
-CollisionTile Player::CheckCollisionWithTiles(std::vector<Tile>* collisions) {
-	CollisionTile result;
-	Tile tmp = {
-		{ (float)50, (float)50 },
-		{ (float)50, (float)50 },
-	};
-	result.tile = tmp;
-	result.collisionSide = top;
-	result.didCollisionHappen = false;
-
-	for (auto tile : *collisions) {
-		bool leftOverlap = 
-			position.x < (tile.position.x + tile.size.x) &&
-			position.x > tile.position.x;
-		bool rightOverlap =
-			(position.x + size.x) > tile.position.x &&
-			(position.x + size.x) < tile.position.x + tile.size.x;
-		bool topOverlap =
-			position.y < (tile.position.y + tile.size.y) &&
-			position.y > tile.position.y;
-		bool bottomOverlap =
-			(position.y + size.y) > tile.position.y &&
-			(position.y + size.y) < tile.position.y + size.y;
  
-		if (leftOverlap && (topOverlap || bottomOverlap)) {
-			result.didCollisionHappen = true;
-			result.tile = tile;
-			result.collisionSide = left;
-			printf("\nLeft");
-		//	break;
-		}
-		if (rightOverlap && (topOverlap || bottomOverlap)) {			
-			result.didCollisionHappen = true;
-			result.tile = tile;
-			result.collisionSide = right;
-			printf("\nRight");
-		//	break;
-		}
-		if (topOverlap && (leftOverlap || rightOverlap)) {			
-			result.didCollisionHappen = true;
-			result.tile = tile;
-			result.collisionSide = top;
-			printf("\nTop");
-		//	break;
-		}
-		if (bottomOverlap && (leftOverlap || rightOverlap)) {			
-			result.didCollisionHappen = true;
-			result.tile = tile;
-			result.collisionSide = bottom;
-			printf("\nBottom");
-		//	break;
-		}
-	};
-	return result;
-};
-
-void Player::CollisionManager(CollisionTile collision) {
-	if (collision.didCollisionHappen == 1) {
-		switch(collision.collisionSide) {
-			case top:
-				velocity.y = 0;
-				position.y = collision.tile.position.y + collision.tile.size.y;
-				break;
-			case bottom:
-				velocity.y = 0;
-				position.y = collision.tile.position.y - size.y;
-				break;
-			case left:
-				velocity.x = 0;
-				position.x = collision.tile.position.x + collision.tile.size.x;
-				break;
-			case right:
-				velocity.x = 0;
-				position.x = collision.tile.position.x - size.x;
-				break;
-		}		
-	}
-}
-
-
-

@@ -144,7 +144,7 @@
 // where aggregate initialization can't be used
 // So, give a more clear error stating how to fix this
 #if !defined(_MSC_VER) && (defined(__cplusplus) && __cplusplus < 201103L)
-    #error "C++11 or later is required. Add -std=c++11"
+  #error "C++11 or later is required. Please add -std=c++11 or a later standard to your compiler options."
 #endif
 
 // NOTE: We set some defines with some data types declared by raylib
