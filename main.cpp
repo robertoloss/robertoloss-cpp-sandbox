@@ -59,7 +59,7 @@ int main(void)
 			screenHeight - map.size.y,
 		};
 
-    InitWindow(screenWidth, screenHeight, "C++ Platformer (sanboxing) | Roberto Loss");
+    InitWindow(screenWidth, screenHeight, "C++ Platformer (sandboxing) | Roberto Loss");
     // SetTargetFPS(60);               
 		SetConfigFlags(FLAG_VSYNC_HINT);
     std::vector<Tile*> collisions;
