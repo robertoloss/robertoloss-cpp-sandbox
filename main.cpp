@@ -59,7 +59,7 @@ int main(void)
 			screenHeight - map.size.y,
 		};
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
+    InitWindow(screenWidth, screenHeight, "C++ Platformer (sanboxing) | Roberto Loss");
     // SetTargetFPS(60);               
 		SetConfigFlags(FLAG_VSYNC_HINT);
     std::vector<Tile*> collisions;
