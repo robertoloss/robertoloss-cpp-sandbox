@@ -1,9 +1,6 @@
 #include "player.h"
-#include <ios>
-#include <iostream>
 #include "raylib.h"
 #include <cmath>
-#include <cstdio>
 
 
 void Player::Move(Map * map) {

@@ -1,9 +1,5 @@
 #include "player.h"
-#include <ios>
-#include <iostream>
 #include "raylib.h"
-#include <cmath>
-#include <cstdio>
 
 void Player::CheckIfCollision(Tile* tile, Map * map) {
 	if ( // TOP
